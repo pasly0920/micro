@@ -2,10 +2,9 @@
 #include <stdio.h>
 #include <avr/iom128.h>
 
-//#define F_CPU 16000000UL 버저 소리를 원래대로 없앨려면 주석 처리 해제
+#define F_CPU 16000000UL // 버저 소리를 원래대로 할려면 주석 처리
 #define __DELAY_BACKWARD_COMPATIBLE__
 #include <util/delay.h>
-#define F_CPU 16000000UL
 
 #define CDS_VALUE 871
 
@@ -162,6 +161,9 @@ void loop() {
     temp_read();
     temperature = temp_read();
     _delay_ms(10);
+    if(temperature == 0) {
+        temperature = temp_read();
+    }
     warn_temperature(temperature);
     read_gas();
     display_FND(temperature);
